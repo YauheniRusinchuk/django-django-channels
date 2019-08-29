@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'header.html' %}
+
+
+    <div class="detail_container">
+        <div class="detail_users">
+            <h4>List users</h4>
+            <div class="detail_users_wrapper">
+                {% if channel.peoples.all %}
+                    {% for people in channel.peoples.all %}
+                        <a href="{% url 'profile:profile_page' name=people.username %}">{{people.username}}</a><br/>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="chat_container">
+            <h4>{{channel.name}}</h4>
+            <div class="chat_container_wrapper">
+                {% for message in channel.message_set.all %}
+                <div class="chat_item">
+                    <a href="{% url 'profile:profile_page' name=message.who.username %}">{{message.who.username}}</a>
+                    <p>{{message.text}}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="form_addnew_message">
+                <form class="form_addnew">
+                    <input class='text_message' type="text" placeholder="new message ..." />
+                    <button type="button" name="button">SEND</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+
+    $(function(){
+        let loc = window.location;
+        let wsStart = 'ws://';
+        if(loc.protocol == 'https:') {
+            wsStart = 'wss://';
+        }
+        let endPoint = wsStart + loc.host + loc.pathname
+        let wsMsg = new WebSocket(endPoint);
+        wsMsg.onopen = function(e) {console.log("OpenMSG", e)}
+
+         wsMsg.onmessage = function(e) {
+             let data = JSON.parse(e.data)
+             $('.chat_container_wrapper')
+                .append(`<div class="chat_item">
+                   <a href=''>${data['username']}</a>
+                   <p>${data['message']}</p>
+                   </div>`);
+         }
+
+
+        $('.form_addnew').on('submit', (e)=> {
+            e.preventDefault();
+            let text = $('.text_message').val();
+
+            if(text) {
+                console.log(text);
+                let data = {'message': text}
+                wsMsg.send(JSON.stringify(data))
+                $('.form_addnew')[0].reset();
+            }
+        })
+    })
+
+
+</script>
+
+
+{% endblock %}

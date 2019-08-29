@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="register_container">
+        <div class="register_form">
+            <p>Hi, register in our chat</p>
+            <form class='form_register'>{% csrf_token %}
+                <div class='login_error'>
+                    <p>Login required.</p>
+                </div>
+                <input class='register_login' type='text' placeholder="Login ..." />
+                <div class='login_error_length'>
+                    <p>Password must be at least 8 characters.</p>
+                </div>
+                <input class='register_password' type='password' placeholder="Password..." />
+                <div class='login_error_confirm'>
+                    <p>Password must match.</p>
+                </div>
+                <input class='register_password_confirm' type='password' placeholder="Password confirm..." />
+                <button>REGISTER</button>
+            </form>
+        </div>
+    </div>
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock %}

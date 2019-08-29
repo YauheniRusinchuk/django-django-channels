@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="profile_container">
+        <p class='profile_username'>{{profile.username}}</p>
+        <p class='description_profile'>
+            {{profile.profile.description}}
+        </p>
+        <h4>Created channels</h4>
+        {% for channel in profile.channel_set.all %}
+            <a class='list_channels_profile' href="{% url 'detail:detail_page' pk=channel.pk  %}">{{channel.name}}</a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

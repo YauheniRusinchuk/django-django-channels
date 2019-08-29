@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="search_container">
+        {% if users %}
+            {% for user in users %}
+                <a href="">{{user.name}}</a>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+
+{% endblock %}

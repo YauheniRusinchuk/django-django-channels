@@ -1,0 +1,17 @@
+{% load static %}
+<div class="header_container">
+    <div class="header_menu">
+        <form action="{% url 'search:search_page' %}" class='form_search'>
+            <input name='q' type='text' placeholder="Search ..." />
+        </form>
+    </div>
+    <div class="header_logo">
+        <a href="{% url 'home:home_page' %}">YOURCHAT</a>
+    </div>
+    <div class="header_btn_logout">
+        <div class="header_info_user">
+            <p>Hi, <a href="{% url 'profile:profile_page' name=user.username %}">{{user.username}}</a></p>
+        </div>
+        <a class='btn_logout' href="{% url 'home:exit_page' %}">logout</a>
+    </div>
+</div>

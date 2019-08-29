@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% include 'header.html' %}
+    <div class="newchannel_container">
+        <h4>NEW CHANNEL</h4>
+        <img class='check_good' src="{% static 'assets/checked.png' %}" />
+        <form class="form_new_channel">{% csrf_token %}
+            <label class='name_error'>Name required</label>
+            <input class='newchannel_name' type="text" placeholder="Name channel ...." />
+            <p class='not_password'>You can not set a password, then the channel will be open to everyone.</p>
+            <input class='newchannel_password' type="password"  placeholder="Password ..." />
+            <button type="submit">NEW</button>
+        </form>
+    </div>
+<script src="{% static 'js/newchannel.js' %}"></script>
+{% endblock %}

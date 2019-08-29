@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="home_container">
+        <div class="btn_new_chat">
+            <a href="{% url 'newchannel:newchannel_page' %}">NEW CHHANNEL</a>
+        </div>
+        <h4>Lists channels</h4>
+
+        <div class="list_channels">
+            {% if channels %}
+                {% for channel in channels %}
+                    <div class="item_">
+                        <a href="{% url 'detail:detail_page' pk=channel.pk  %}">{{channel.name}}</a>
+                        {% if channel.password %}
+                            <img src="{% static 'assets/padlock.png' %}" />
+                        {% endif %}
+                        <p>Author: <a href="{% url 'profile:profile_page' name=channel.author.username %}">{{channel.author}}</a></p>
+                    </div>
+                {% endfor%}
+            {% else %}
+
+            {% endif %}
+        </div>
+
+    </div>
+
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
